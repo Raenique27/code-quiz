@@ -17,3 +17,31 @@ const countDown = function () {
         return stopGame();
     }
 };
+
+let questions = [
+    {
+        answered: false,
+        question: "Commonly used data types DO Not include:",
+        answer: [["strings", false], ["booleans", false], ["alerts", true], ["numbers", false]]
+    },
+    {
+        answered: false,
+        question: "The condition in an if/else statement is enclosed with _________.",
+        answer: [["quotes", false], ["curly brackets", false], ["square brackets", false], ["parenthesis", true]]
+    },
+    {
+        answered: false,
+        question: "Arrays in Javascript can be used to store _________.",
+        answer: [["numbers and strings", false], ["other arrays", false], ["booleans", false], ["all of the above", true]]
+    },
+    {
+        answered: false,
+        question: "String values must be enclosed within ________ when being assigned to variables.",
+        answer: [["quotes", true],["commas", false], ["curly brackets", false], ["parenthesis", false]]
+    },
+    {
+        answered: false,
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        answer: [["JavaScript", false], ["terminal/bash", false], ["console.log", true], ["for loops", false]]
+    }
+]
