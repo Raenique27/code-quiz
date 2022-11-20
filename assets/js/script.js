@@ -44,4 +44,16 @@ let questions = [
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
         answer: [["JavaScript", false], ["terminal/bash", false], ["console.log", true], ["for loops", false]]
     }
-]
+];
+
+const startQuiz = function() {
+    const startScreen = {
+        id: "start-page"
+    }
+    // hides contents on start page
+    hidePage(startScreen);
+    // adds 75 sec to clock
+    timer.textContent = '75';
+    // selects first quiz question
+    newQuestion(null);
+}
