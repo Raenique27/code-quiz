@@ -68,3 +68,22 @@ const hidePage = function(objEl) {
     }
     return;
 }
+
+const showAnswer = function(answer) {
+    let selectedAnswerContainer = document.getElementById('wrong-correct-container')
+
+    if (selectedAnswerContainer === null) {
+        selectedAnswerContainer = document.createElement('section')
+        selectedAnswerContainer.id = 'wrong-correct-container';
+        selectedAnswerContainer.style.display = 'none';
+        quizBody.appendChild(selectedAnswerContainer);
+
+        const showSelectedAnswer = document.createElement('p');
+        showSelectedAnswer.id = 'wrong-correct';
+        showSelectedAnswer.appendChild(showSelectedAnswer);
+        return;
+    } else if (answer === null) {
+        selectedAnswerContainer.style.display = 'none';
+        return;
+    }
+}
