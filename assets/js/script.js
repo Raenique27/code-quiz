@@ -57,3 +57,14 @@ const startQuiz = function() {
     // selects first quiz question
     newQuestion(null);
 }
+
+const hidePage = function(objEl) {
+    // elemts that will be hidden
+    objValues = Object.values(objEl);
+
+    for (i=0; i < objValues.length; i++) {
+        let quizScreen = document.getElementById(objValues[i]);
+        quizScreen.style.display = "none";
+    }
+    return;
+}
