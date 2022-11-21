@@ -104,3 +104,13 @@ const showAnswer = function(answer) {
     clearAnswer = setTimeout(answerCleared, 5000);
 }
 
+// stops displaying answer to previous question
+const answerCleared = function() {
+    const element = document.getElementById('wrong-correct-container');
+    if (element) {
+        answer = {
+            id: 'wrong-correct-container',
+        }
+        hidePage(answer);
+    }
+}
