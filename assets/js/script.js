@@ -142,5 +142,37 @@ const newQuestion = function(lastAnswer) {
         heading.className = 'question-header';
         heading.textContent = Object.values(question)[1];
         section.appendChild(heading)
+
+        // div button container
+        const answersContainer = document.createElement('div');
+        answersContainer.className = 'answers-container';
+        section.appendChild(answersContainer);
+
+        // create button one at a time
+        for (let i=0; i < 4; i++) {
+            let answerBtn = document.createElement('button');
+            answerBtn.className = 'answer-btn';
+            answerBtn.textContent = `${i+1}. ${Object.values(question)[2][i][0]}`;
+            answerBtn.id = `answer-${Object.values(question)[2][i][1]}`;
+            answersContainer.appendChild(answerBtn);
+        }
+
+        // append section to main body
+        start.appendChild(section);
+
+        answerBtnEl = document.querySelectorAll(".answer-btn");
+        // Add event listener to buttons
+        for (let i=0; i < answerBtnEl.length; i++) {
+            answerBtnEl[i].addEventListener('click', checkQuestion)
+        }
+    } else if (question === false) {
+        stopGame();
+    } else {
+        const answerBtns = document.querySelectorAll('.answer-btn')
+        for (let i=0; i < 4; i++) {
+            answerBtns[i].textContent = `${i+1}. ${Object.values(question)[2][i][0]}`;
+            answerBtns[i].id = `answer-${Object.values(question)[2][i][1]}`;
+        }
     }
 }
+
