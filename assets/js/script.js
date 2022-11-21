@@ -114,3 +114,33 @@ const answerCleared = function() {
         hidePage(answer);
     }
 }
+
+// creates a new question at random 
+const newQuestion = function(lastAnswer) {
+    showAnswer(lastAnswer);
+
+    // clock start counting down
+    if (timerCountdown === undefined) {
+        timerCountdown = setInterval(countDown, 1000);
+    }
+
+    // question to be displayed
+    const question = selectQuestion();
+    const questionContainer = document.getElementById('question-container');
+    // display question
+    if ((questionContainer) && questionContainer.style.display === 'none') {
+        questionContainer.style.display = 'flex';
+    }
+
+    if (!questionContainer) {
+        const section = document.createElement('section');
+        section.className = 'question-container';
+        section.id = 'question-container'
+
+        // create h2 question header
+        const heading = document.createElement('h2');
+        heading.className = 'question-header';
+        heading.textContent = Object.values(question)[1];
+        section.appendChild(heading)
+    }
+}
