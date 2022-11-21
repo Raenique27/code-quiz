@@ -86,4 +86,21 @@ const showAnswer = function(answer) {
         selectedAnswerContainer.style.display = 'none';
         return;
     }
+
+    clearTimeout(clearAnswer);
+
+    const showSelectedAnswer = document.getElementById('wrong-correct');
+
+    // display wrong/correct response
+    if (answer) {
+        showSelectedAnswer.textContent = `Correct!`
+    } else if (answer === false) {
+        showSelectedAnswer.textContent = `Wrong!`
+    }
+    selectedAnswerContainer.style.display = 'flex';
+    showSelectedAnswer.style.display = 'flex';
+
+    // set response to cleared in 5 seconds
+    clearAnswer = setTimeout(answerCleared, 5000);
 }
+
