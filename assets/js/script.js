@@ -429,4 +429,37 @@ const highscoresPage =  function() {
     start.appendChild(parentScoreContainer);
     return;
 }
+// checks where users current score needs to be on highscore list
+const compareScore = function(currentHighscore, highscore) {
+    let index = undefined;
+    const storedHighscore = 'High Score';
+    for (let i=0; i < highscore.length; i++) {
+        // ig highscore list is full
+        if (highscore.length === 5) {
+            if (highscore[i][1] < currentHighscore[1]) {
+                // if user score is new a highscore add it to list and remove old score
+                highscore.splice(i, 0, currentHighscore);
+                highscore.pop();
+                console.log('New score added!')
+                localStorage.setItem(storedHighscore, JSON.stringify(highscore));
+                return;
+            }
+        } else if (highscore[i][1] < currentHighscore[1]) {
+            highscore.splice(i, 0, currentHighscore);
+            console.log('New Highscore')
+            localStorage.setItem(storedHighscore, JSON.stringify(highscore));
+            return;
+            // if user has a tied highscore score needs to be placed in the middle of highscore list 
+        } else if (highscore[i][1] === currentHighscore[1]) {
+            index = i
+            // user has lowest highscore on highscore list
+        } else if (i+1 == highscore.length) {
+            highscore.splice(highscore.length, 0, currentHighscore);
+            console.log('Lowest highscore inserted')
+            localStorage.setItem(storedHighscore, JSON.stringify(highscore));
+            return;
+        }
+    }
 
+    
+}
