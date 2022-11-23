@@ -300,3 +300,44 @@ const stopQuiz = function () {
     // append to start page
     start.appendChild(stopQuizScreen);
 }
+
+const submitScore = function(event) {
+    event.preventDefault();
+
+    // check for user input
+    const checkInput = collectScore();
+    if (checkInput === false) {
+        return;
+    }
+    return highscoresPage();
+}
+
+// store recent user score
+const collectScore = function() {
+    const userInitial = document.getElementById('input-initials').value
+    const userFinalScore = timer.innerText;
+    const userData = [userInitial, userFinalScore];
+
+    // if nothing entered in input field by user alert user
+    if (!userInitial) {
+        alert('Please enter your intitials!');
+        return false;
+    }
+
+    // collect highscore from storage
+    const storedHighscore = 'High Score';
+    let currentHighscore = JSON.parse(localStorage.getItem(storedHighscore));
+
+    // if no high scores stored create local storage for high scores
+    if (!currentHighscore) {
+        const highscore = [userData];
+        localStorage.setItem(storedHighscore, JSON.stringify(highscore));
+        console.log('No highscores, local storage created!')
+    } else {
+        console.log('comparing user score with current highscores')
+        compareScore(userData, currentHighscore);
+        return true;
+    }
+
+    return true;
+}
