@@ -57,14 +57,14 @@ const startQuiz = function() {
         id: "start-page",
     }
     // hides contents on start page
-    hidePage(startScreen);
+    hideScreen(startScreen);
     // adds 75 sec to clock
     timer.textContent = '75';
     // selects first quiz question
     newQuestion(null);
 }
 
-const hidePage = function(objEl) {
+const hideScreen = function(objEl) {
     // elemts that will be hidden
     objValues = Object.values(objEl);
 
@@ -86,7 +86,7 @@ const showAnswer = function(answer) {
 
         const showSelectedAnswer = document.createElement('p');
         showSelectedAnswer.id = 'wrong-correct';
-        showSelectedAnswer.appendChild(showSelectedAnswer);
+        selectedAnswerContainer.appendChild(showSelectedAnswer);
         return;
     } else if (answer === null) {
         selectedAnswerContainer.style.display = 'none';
@@ -117,7 +117,7 @@ const answerCleared = function() {
         answer = {
             id: 'wrong-correct-container',
         }
-        hidePage(answer);
+        hideScreen(answer);
     }
 }
 
@@ -166,14 +166,17 @@ const newQuestion = function(lastAnswer) {
         // append section to main body
         start.appendChild(section);
 
-        answerBtnEl = document.querySelectorAll(".answer-btn");
+        answerBtnEl = document.querySelectorAll('.answer-btn');
         // Add event listener to buttons
         for (let i=0; i < answerBtnEl.length; i++) {
-            answerBtnEl[i].addEventListener('click', checkQuestion)
+            answerBtnEl[i].addEventListener('click', questionCheck)
         }
     } else if (question === false) {
         stopQuiz();
     } else {
+        const heading = document.querySelector('.question-header');
+        heading.textContent = Object.values(question)[1];
+
         const answerBtns = document.querySelectorAll('.answer-btn')
         for (let i=0; i < 4; i++) {
             answerBtns[i].textContent = `${i+1}. ${Object.values(question)[2][i][0]}`;
@@ -247,8 +250,8 @@ const stopQuiz = function () {
         stopEl.style.display = 'flex';
 
         let finalQuizScore = parseInt(timer.innerText);
-        const finalScore = document.getElementById('final-score');
-        finalScore.textContent = `Your final score is ${finalQuizScore}`;
+        const quizFinalScore = document.getElementById('display-final-score');
+        quizFinalScore.textContent = `Your final score is ${finalQuizScore}`;
 
         // empty input from previous entry
         const inputEl = document.getElementById('input-initials');
@@ -267,11 +270,11 @@ const stopQuiz = function () {
     stopQuizScreen.appendChild(stopQuizHeader);
 
     // display final score on end of quiz screen
-    const finalScore  = document.createElement('p');
-    finalScore.id = 'final-score';
+    const quizFinalScore  = document.createElement('p');
+    quizFinalScore.id = 'display-final-score';
     let finalQuizScore = parseInt(timer.innerText);
-    finalScore.textContent = `Your final score is ${finalQuizScore}`;
-    stopQuizScreen.appendChild(finalScore);
+    quizFinalScore.textContent = `Your final score is ${finalQuizScore}`;
+    stopQuizScreen.appendChild(quizFinalScore);
 
     // container for submitted user intitials
     const initialsSubmitEl = document.createElement('form');
@@ -332,7 +335,7 @@ const collectScore = function() {
     if (!currentHighscore) {
         const highscore = [userData];
         localStorage.setItem(storedHighscore, JSON.stringify(highscore));
-        console.log('No highscores, local storage created!')
+        console.log('No current highscores, local storage created!')
     } else {
         console.log('comparing user score with current highscores')
         compareScore(userData, currentHighscore);
@@ -348,7 +351,7 @@ const highscoresPage =  function() {
     timerCountdown = undefined;
 
     // clear screen so no previous answers are shown
-    clearAnswer();
+    answerCleared();
 
     const childrenEl = start.children;
     let chosenChild = undefined;
@@ -398,7 +401,7 @@ const highscoresPage =  function() {
         for (let i=0; i < scores.length; i++) {
             let listItem = document.createElement('li');
             listItem.className = 'high-score';
-            listItem.textContent = `${scores[i][0]} - ${scores[i][1]}`;
+            listItem.textContent = `${i+1}. ${scores[i][0]} - ${scores[i][1]}`;
             highscoreList.appendChild(listItem);
         }
     } else {
@@ -422,7 +425,7 @@ const highscoresPage =  function() {
     startQuizAgainBtn.textContent = 'Start Quiz';
     clearBtn.textContent = 'Clear highscores';
     startQuizAgainBtn.addEventListener('click', startAgain);
-    clearBtn.addEventListener('click', clearHighscores);
+    clearBtn.addEventListener('click', removeHighscores);
     btnContainer.appendChild(startQuizAgainBtn);
     btnContainer.appendChild(clearBtn);
 
@@ -529,3 +532,6 @@ const updatedScorePage = function() {
     }
     return;
 }
+
+viewScore.addEventListener('click', highscoresPage);
+startQuizBtn.addEventListener('click', startQuiz);
