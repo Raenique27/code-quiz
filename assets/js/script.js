@@ -172,7 +172,7 @@ const newQuestion = function(lastAnswer) {
             answerBtnEl[i].addEventListener('click', checkQuestion)
         }
     } else if (question === false) {
-        stopGame();
+        stopQuiz();
     } else {
         const answerBtns = document.querySelectorAll('.answer-btn')
         for (let i=0; i < 4; i++) {
@@ -229,3 +229,30 @@ const questionCheck = function() {
     return newQuestion(true);
 }
 
+// end page where user can see score and enter intitals
+const stopQuiz = function () {
+    // stop timer/ reset timer
+    clearTimeout(timerCountdown);
+    timerCountdown = undefined;
+
+    // remove questions from screen
+    const screenObj = {
+        id: 'question-container',
+    }
+    hideScreen(screenObj);
+
+    // display html if it exits
+    const stopEl = document.getElementById('stop-container');
+    if ((stopEl) && stopEl.style.display === 'none') {
+        stopEl.style.display = 'flex';
+
+        let finalQuizScore = parseInt(timer.innerText);
+        const finalScore = document.getElementById('final-score');
+        finalScore.textContent = `Your final score is ${finalQuizScore}`;
+
+        // empty input from previous entry
+        const inputEl = document.getElementById('input-initials');
+        inputEl.value = '';
+        return;
+    }
+}
