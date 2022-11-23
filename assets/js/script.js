@@ -277,4 +277,26 @@ const stopQuiz = function () {
     const initialsSubmitEl = document.createElement('form');
     initialsSubmitEl.id = 'submit-initials'
     stopQuizScreen.appendChild(initialsSubmitEl);
+
+    // 'Enter initials' text
+    const initialsEl = document.createElement('span');
+    initialsEl.textContent = 'Enter initials:';
+    initialsSubmitEl.appendChild(initialsEl);
+
+    // input element
+    const inputEl = document.createElement('input');
+    inputEl.type = 'text';
+    inputEl.id = 'input-initials';
+    initialsSubmitEl.appendChild(inputEl);
+
+    // button
+    const submitBtn = document.createElement('button');
+    submitBtn.type = 'submit';
+    submitBtn.id = 'btn-submit';
+    submitBtn.innerText = 'Submit'
+    initialsSubmitEl.appendChild(submitBtn);
+    initialsSubmitEl.addEventListener('submit', submitScore);
+
+    // append to start page
+    start.appendChild(stopQuizScreen);
 }
