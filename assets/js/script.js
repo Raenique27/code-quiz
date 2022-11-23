@@ -20,7 +20,7 @@ const countDown = function () {
     timeLeft = timer.textContent - 1;
     timer.textContent = `${timeLeft}`;
     if (timeLeft <= 0) {
-        return stopGame();
+        return stopQuiz();
     }
 };
 
@@ -54,7 +54,7 @@ let questions = [
 
 const startQuiz = function() {
     const startScreen = {
-        id: "start-page"
+        id: "start-page",
     }
     // hides contents on start page
     hidePage(startScreen);
@@ -207,5 +207,25 @@ const selectQuestion = function () {
     choice.answered = true;
 
     return choice;
+}
+
+const questionCheck = function() {
+    // check if user answers correct
+    const userAnswer = this.id;
+    console.log(userAnswer)
+
+    if (userAnswer === 'answer-false') {
+        // reduce time by 10 secs if wrong answer
+        currentTime = parseInt(timer.textContent);;
+        timer.textContent = `${currentTime - 10}`;
+
+        // end quiz if timer is below zero after wrong answer is selected
+        if (currentTime <= 0) {
+            return stopQuiz();
+        }
+
+        return newQuestion(false);
+    }
+    return newQuestion(true);
 }
 
