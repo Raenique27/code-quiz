@@ -341,3 +341,92 @@ const collectScore = function() {
 
     return true;
 }
+
+const highscoresPage =  function() {
+    // stop timer and reset it
+    clearTimeout(timerCountdown);
+    timerCountdown = undefined;
+
+    // clear screen so no previous answers are shown
+    clearAnswer();
+
+    const childrenEl = start.children;
+    let chosenChild = undefined;
+    for (let i=0; i < childrenEl.length; i++) {
+        let displayChild = childrenEl[i].style.display
+        if (displayChild != 'none' && childrenEl[i].nodeType == Node.ELEMENT_NODE) {
+            chosenChild = childrenEl[i];
+            break;
+        }
+    }
+
+    const page = {
+        id1: 'header',
+        id2: chosenChild.id
+    };
+
+    hideScreen(page);
+
+    const questionPage = document.getElementById('parent-score-container')
+    // ig highscore exists update it
+    if ((questionPage) && questionPage.style.display === 'none') {
+        return updatedScorePage();
+    }
+
+    // if highscore page does not exists create it
+    const parentScoreContainer = document.createElement('section');
+    parentScoreContainer.id = 'parent-score-container';
+    const childScoreContainer = document.createElement('section');
+    childScoreContainer.id = 'child-score-container';
+    parentScoreContainer.appendChild(childScoreContainer);
+
+    // header for highscores page
+    const highscoreHeader = document.createElement('h2');
+    highscoreHeader.id = 'highscore-header';
+    highscoreHeader.innerText = 'Highscores';
+    childScoreContainer.appendChild(highscoreHeader);
+
+    const highscoreList = document.createElement('ul');
+    highscoreList.id = 'highscore-list'
+    childScoreContainer.appendChild(highscoreList);
+
+    const storedHighscore = 'High Score';
+    const scores = JSON.parse(localStorage.getItem(storedHighscore));
+
+    // if already highscores store them in list
+    if (scores != null) {
+        for (let i=0; i < scores.length; i++) {
+            let listItem = document.createElement('li');
+            listItem.className = 'high-score';
+            listItem.textContent = `${scores[i][0]} - ${scores[i][1]}`;
+            highscoreList.appendChild(listItem);
+        }
+    } else {
+        // if no highscores display 'No Highscores'
+        let listItem = document.createElement('li');
+        listItem.className = 'high-score';
+        listItem.textContent = `No Highscores!`;
+        highscoreList.appendChild(listItem);
+    }
+
+    // container for high score button
+    const btnContainer = document.createElement('div');
+    btnContainer.id = 'highscore-button-container';
+    childScoreContainer.appendChild(btnContainer);
+
+    // buttons
+    const startQuizAgainBtn = document.createElement('button');
+    const clearBtn = document.createElement('button');
+    startQuizAgainBtn.className = 'highscore-button';
+    clearBtn.className = 'highscore-button';
+    startQuizAgainBtn.textContent = 'Start Quiz';
+    clearBtn.textContent = 'Clear highscores';
+    startQuizAgainBtn.addEventListener('click', startAgain);
+    clearBtn.addEventListener('click', clearHighscores);
+    btnContainer.appendChild(startQuizAgainBtn);
+    btnContainer.appendChild(clearBtn);
+
+    start.appendChild(parentScoreContainer);
+    return;
+}
+
