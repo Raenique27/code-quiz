@@ -255,4 +255,26 @@ const stopQuiz = function () {
         inputEl.value = '';
         return;
     }
+
+    // if html does not exist create it
+    // container for end screen
+    const stopQuizScreen = document.createElement('section');
+    stopQuizScreen.id = 'stop-container';
+
+    // header for end screen
+    const stopQuizHeader = document.createElement('h2');
+    stopQuizHeader.textContent = 'All done!';
+    stopQuizScreen.appendChild(stopQuizHeader);
+
+    // display final score on end of quiz screen
+    const finalScore  = document.createElement('p');
+    finalScore.id = 'final-score';
+    let finalQuizScore = parseInt(timer.innerText);
+    finalScore.textContent = `Your final score is ${finalQuizScore}`;
+    stopQuizScreen.appendChild(finalScore);
+
+    // container for submitted user intitials
+    const initialsSubmitEl = document.createElement('form');
+    initialsSubmitEl.id = 'submit-initials'
+    stopQuizScreen.appendChild(initialsSubmitEl);
 }
