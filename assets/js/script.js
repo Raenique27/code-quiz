@@ -495,3 +495,37 @@ const removeHighscores = function() {
     return updatedScorePage();
 }
 
+// update highscore page
+const updatedScorePage = function() {
+    const questionPage = document.getElementById('parent-score-container');
+    const highscoreList = document.getElementById('highscore-list');
+    const storedHighscore = 'High Score';
+    const scores = JSON.parse(localStorage.getItem(storedHighscore));
+
+    // remove current highscores
+    while(highscoreList.firstChild) {
+        highscoreList.removeChild(highscoreList.lastChild);
+    }
+
+    // user have previous scores saved update them
+    if (scores) {
+        for (let i=0; i < scores.length; i++) {
+            let listItem = document.createElement('li');
+            listItem.className = 'high-score';
+            listItem.textContent = `${i+1}. ${scores[i][0]} - ${scores[i][1]}`;
+            highscoreList.appendChild(listItem);
+        }
+    } else {
+        // if user doesn't have highscores show 'No Highscores'
+        let listItem = document.createElement('li');
+        listItem.className = 'high-score';
+        listItem.textContent = `No Highscores!`;
+        highscoreList.appendChild(listItem);
+    }
+
+    // show page elements
+    if (questionPage.style.display === 'none') {
+        questionPage.style.display = 'flex';
+    }
+    return;
+}
