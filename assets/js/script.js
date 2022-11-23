@@ -461,5 +461,37 @@ const compareScore = function(currentHighscore, highscore) {
         }
     }
 
-    
+    // users tied highscore is placed bwlow previous tied scores
+    if (index !=undefined) {
+        highscore.splice(index+1, 0, currentHighscore);
+        console.log('Tied high score added')
+        localStorage.setItem(storedHighscore, JSON.stringify(highscore));
+        return;
+    }
 }
+
+const startAgain = function () {
+    // remove highscore screen
+    const highscoreSection = {
+        id: 'parent-score-container'
+    }
+    hideScreen(highscoreSection);
+
+    // go back to start screen
+    header.style.display = 'flex';
+    startPage.style.display = 'flex';
+    timer.textContent = '0';
+    questions.forEach((question) => {
+        console.log(question);
+        question.answered = false;
+    })
+    return;
+}
+
+// remove highscores from highscore page and removes local storage
+const removeHighscores = function() {
+    const storedHighscore = 'High Score';
+    localStorage.removeItem(storedHighscore);
+    return updatedScorePage();
+}
+
