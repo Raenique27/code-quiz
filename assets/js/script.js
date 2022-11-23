@@ -9,6 +9,12 @@ const quizBody = document.getElementById("quiz-body");
 let timerCountdown = undefined;
 let clearAnswer = undefined;
 
+
+// random num generator
+const randomNum = function(min, max) {
+    let num = Math.floor(Math.random() * (max + 1 - min)) + min;
+    return num;
+}
 // decrement clock by one second and check for expired time
 const countDown = function () {
     timeLeft = timer.textContent - 1;
@@ -174,5 +180,32 @@ const newQuestion = function(lastAnswer) {
             answerBtns[i].id = `answer-${Object.values(question)[2][i][1]}`;
         }
     }
+}
+
+const selectQuestion = function () {
+    let remainingQuestions = [];
+
+    // loop through all questions
+    for (let i=0; i < questions.length; i++) {
+        answered = Object.values(questions[i])[0]
+        if (!answered) {
+            remainingQuestions.push(i)
+        }
+    }
+
+    // if no questions are left end quiz
+    if (remainingQuestions.length === 0) {
+        return false;
+    }
+
+    // Choose randomize question
+    let remainingQuestionsIndex = randomNum(0, remainingQuestions.length - 1);
+    let questionIndex = remainingQuestions[remainingQuestionsIndex]
+    let choice = questions[questionIndex];
+
+    // mark question as asked
+    choice.answered = true;
+
+    return choice;
 }
 
